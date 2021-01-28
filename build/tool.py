@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[4]:
+# In[71]:
 
 
 import numpy as np
@@ -38,7 +38,7 @@ get_ipython().run_line_magic('matplotlib', 'inline')
 sns.set()
 
 
-# In[5]:
+# In[72]:
 
 
 #Load the dataset with the calculated differences Y[t], ommit the first value because difference is NaN and print the head()
@@ -59,7 +59,7 @@ def file(fileinput):
 
 # # Code for the Random(p) Problem
 
-# In[6]:
+# In[73]:
 
 
 def random_prob_model(counter, probability):
@@ -115,12 +115,12 @@ def random_prob_model(counter, probability):
     load_differences = np.asarray(load_list) - np.asarray(minimums)
     times_differences = np.array(time_list) - np.array(minimums_times)
     
-    return minimums, load_list, load_differences, minimums_times, time_list, np.absolute(times_differences)
+    return minimums, load_list, load_differences, minimums_times, time_list, times_differences
 
 
 # # Code for Secretary Model
 
-# In[7]:
+# In[74]:
 
 
 def secretary_model(counter):
@@ -178,12 +178,12 @@ def secretary_model(counter):
     times_differences = np.array(time_list) - np.array(minimums_times)
     time_delays = [x - 37 for x in time_list]
     
-    return minimums, load_list, load_differences, minimums_times, time_list, np.absolute(times_differences)
+    return minimums, load_list, load_differences, minimums_times, time_list, times_differences
 
 
 # # Code for the House Selling Model
 
-# In[8]:
+# In[75]:
 
 
 #Without Dataset
@@ -236,12 +236,12 @@ def house_selling_model(counter, r):
     load_differences = np.asarray(load_list) - np.asarray(minimums)
     times_differences = np.array(time_list) - np.array(minimums_times)
     
-    return minimums, load_list, load_differences, minimums_times, time_list, np.absolute(times_differences)
+    return minimums, load_list, load_differences, minimums_times, time_list, times_differences
 
 
 # # RUNS AND VALUES SIMULATIONS FOR MODELS
 
-# In[9]:
+# In[228]:
 
 
 #Simulate the random prob model by defining the rpb to be executed
@@ -249,46 +249,42 @@ def house_selling_model(counter, r):
 def randomP_simulation_run(chunk_func, N):
     n_groups = len(chunk_func[0])
 
-    # create plot
-    fig, (ax1, ax2) = plt.subplots(2,figsize=(150,100)) # plt.subplots()
+    # create plot for loads
+    plt.figure(figsize=(20,15))
     index = np.arange(n_groups)
     bar_width = 0.4
     opacity = 0.8
 
     #Loads Plot
     #Plot the achieved values of each observed samle
-    rects2 = ax1.bar(index, chunk_func[1], bar_width,alpha=opacity,color='black',label='Achieved')
+    rects2 = plt.bar(index, chunk_func[1], bar_width,alpha=opacity,color='black',label='Achieved')
     #Plot the minimum values of each observed sample
-    rects1 = ax1.bar(index + bar_width, chunk_func[0], bar_width,alpha=opacity,color='darkred',label='Optimal')
+    rects1 = plt.bar(index + bar_width, chunk_func[0], bar_width,alpha=opacity,color='darkred',label='Optimal')
 
     #Label
-    ax1.set_xlabel('Stops', fontsize = 50)
-    ax1.set_ylabel('Load Values', fontsize = 50)
-    ax1.set_title('Loads by Stop with for N = {} for Random(P) Model'.format(N), fontsize = 75)
-    ax1.set_xticks(index + bar_width / 2, tuple(range(1,n_groups+1)))
-    ax1.set_xlim([0-bar_width/2,index.size])
-    for p in ax1.patches:
-           ax1.annotate("%.2f" % p.get_height(), (p.get_x() + p.get_width() / 2., p.get_height()),
-                ha='center', va='center', rotation=90, xytext=(0, 20), textcoords='offset points', fontsize = 15)
-    ax1.legend(prop={'size': 30})
+    plt.xlabel('Stops')
+    plt.ylabel('Load Values')
+    plt.title('Loads in each Run with N = {} for Random(P) Model'.format(N), size = 20)
+    plt.xticks(index + (bar_width/2), tuple(range(1,n_groups+1)))
+    plt.xlim([0-bar_width/2,index.size])
+    plt.plot()
+    plt.legend(prop={'size': 15})
+
     
+    
+    plt.figure(figsize=(20,15))
     #Times Plot
-    rects2 = ax2.bar(index, np.absolute(chunk_func[5]), bar_width,alpha=opacity,color='black',label='Achieved')
+    rects2 = plt.bar(index, np.absolute(chunk_func[5]), bar_width,alpha=opacity,color='darkblue',label='Time instance difference from optimal')
     
     #Label
-    ax2.set_xlabel('Stops', fontsize = 50)
-    ax2.set_ylabel('Stopping Delay', fontsize = 50)
-    ax2.set_title('Stopping Delays by Stop with N = {} for Random(P) Model'.format(N), fontsize = 75)
-    ax2.set_xticks(index, tuple(range(1,n_groups+1)))
-    ax2.set_xlim([0-bar_width/2,index.size])
-    for p in ax2.patches:
-           ax2.annotate("%.2f" % p.get_height(), (p.get_x() + p.get_width() / 2., p.get_height()),
-                ha='center', va='center', xytext=(0, 20), textcoords='offset points', fontsize = 15)
-            
-    ax2.legend(prop={'size': 30})
+    plt.xlabel('Stops')
+    plt.ylabel('Load Values')
+    plt.title('Times in each Run with N = {} for Random(P) Model'.format(N), size = 20)
+    plt.xticks(index, tuple(range(1,n_groups+1)))
+    plt.xlim([0-bar_width/2,index.size])
+    plt.plot()  
+    plt.legend(prop={'size': 15})
 
-    ax1.plot()
-    ax2.plot()
     plt.savefig('randomp_figures/random(p)_{}.pdf'.format(N))
     
     #Display the dataframe
@@ -298,7 +294,7 @@ def randomP_simulation_run(chunk_func, N):
     runs_frame = pd.DataFrame(runs_data, columns = ['Run','Optimal','Load when Offloading', 'Load Difference'])
     runs_frame.index += 1
 
-#     display(runs_frame)
+    display(runs_frame)
     
     runs_frame.to_csv('randomp_figures/dataframes/randomp_data_{}.csv'.format(N))
 
@@ -310,46 +306,47 @@ def secretary_simulation_run(chunks):
     n_groups_secretary = len(secretary_model(chunks)[0])
 
     # create plot for loads
-    fig, (ax1, ax2) = plt.subplots(2,figsize=(150,100))
+    plt.figure(figsize=(20,15))
     index = np.arange(n_groups_secretary)
     bar_width = 0.4
     opacity = 0.8
     
     # Loads Plot
     #Plot the achieved values of each observed samle
-    rects2 = ax1.bar(index, secretary_model(chunks)[1], bar_width,alpha=opacity,color='black',label='Achieved')
+    rects2 = plt.bar(index, secretary_model(chunks)[1], bar_width,alpha=opacity,color='black',label='Achieved')
+    
     #Plot the minimum values of each observed sample
-    rects1 = ax1.bar(index + bar_width, secretary_model(chunks)[0], bar_width, alpha=opacity,color='darkred',label='Optimal')
+    rects1 = plt.bar(index + bar_width, secretary_model(chunks)[0], bar_width, alpha=opacity,color='darkred',label='Optimal')
     
     #Label
-    ax1.set_xlabel('Stops', fontsize = 50)
-    ax1.set_ylabel('Load Values', fontsize = 50)
-    ax1.set_title('Loads by Stop with N = {} for Secretary Model'.format(chunks), fontsize = 75)
-    ax1.set_xticks(index + bar_width / 2, tuple(range(1,n_groups_secretary+1)),)
-    ax1.set_xlim([0-bar_width/2,index.size])
-    for p in ax1.patches:
-            ax1.annotate("%.2f" % p.get_height(), (p.get_x() + p.get_width() / 2., p.get_height()),
-                 ha='center', va='center', rotation=90, xytext=(0, 20), textcoords='offset points', fontsize = 15)
-    ax1.legend(prop={'size': 30})
-    
-    #Times Plot
-    #Plot the achieved values of each observed samle
-    rects2 = ax2.bar(index, secretary_model(chunks)[5], bar_width,alpha=opacity,color='black',label='Achieved')
-    
-    #Label
-    ax2.set_xlabel('Stops', fontsize = 50)
-    ax2.set_ylabel('Stopping Delay', fontsize = 50)
-    ax2.set_title('Stopping Delays by Stop with N = {} for Secretary Model'.format(chunks), fontsize = 75)
-    ax2.set_xticks(index, tuple(range(1,n_groups_secretary+1)))
-    ax2.set_xlim([0-bar_width/2,index.size])
-    for p in ax2.patches:
-            ax2.annotate("%.2f" % p.get_height(), (p.get_x() + p.get_width() / 2., p.get_height()),
-                 ha='center', va='center', xytext=(0, 20), textcoords='offset points', fontsize = 15)
-    ax2.legend(prop={'size': 30})
+    plt.xlabel('Stops')
+    plt.ylabel('Load Values')
+    plt.title('Loads in each Run with N = {} for Secretary Model'.format(chunks), size = 20)
+    plt.xticks(index + (bar_width/2), tuple(range(1,n_groups_secretary+1)))
+    plt.xlim([0-bar_width/2,index.size])
+    plt.plot()
+    plt.legend(prop={'size': 15})
 
-    ax1.plot()
-    ax2.plot()
-    plt.savefig('secretary_figures/secretary_{}.pdf'.format(chunks))
+
+    #Time Plot
+    plt.figure(figsize=(20,15))
+
+    #Plot the minimum values of each observed sample
+    rects1 = plt.bar(index + bar_width, secretary_model(chunks)[5], bar_width, alpha=opacity,color='darkblue',label='Time instance difference from optimal')
+    
+    #Label
+    plt.xlabel('Stops')
+    plt.ylabel('Load Values')
+    plt.title('Times in each Run with N = {} for Secretary Model'.format(chunks), size = 20)
+    plt.xticks(index + (bar_width), tuple(range(1,n_groups_secretary+1)))
+    plt.xlim([0-bar_width/2,index.size])
+    plt.plot()
+    plt.legend(prop={'size': 15})
+
+    
+#    ax2.plot()
+#     plt.savefig('secretary_figures/secretary_{}.pdf'.format(chunks))
+    
     
     #Display the dataframe
     runs_data = {'Run':  list(range(1,len(secretary_model(chunks)[0])+1)),'Optimal': secretary_model(chunks)[0],'Load when Offloading': secretary_model(chunks)[1],
@@ -358,7 +355,7 @@ def secretary_simulation_run(chunks):
     runs_frame = pd.DataFrame(runs_data, columns = ['Run','Optimal','Load when Offloading', 'Load Difference'])
     runs_frame.index += 1
 
-#     display(runs_frame)
+    display(runs_frame)
     
     runs_frame.to_csv('secretary_figures/dataframes/secretary_data_{}.csv'.format(chunks))
 
@@ -366,45 +363,44 @@ def house_selling_simulation_run(chunks, r):
     n_groups_house = len(house_selling_model(chunks, r)[0])
 
     # create plot for loads
-    fig, (ax1, ax2) = plt.subplots(2, figsize=(150,100))
+    plt.figure(figsize=(20,15))
     index = np.arange(n_groups_house)
     bar_width = 0.4
     opacity = 0.8
     
     # Loads Plot
     #Plot the achieved values of each observed samle
-    rects2 = ax1.bar(index, house_selling_model(chunks, r)[1], bar_width,alpha=opacity,color='black',label='Achieved')
+    rects2 = plt.bar(index, house_selling_model(chunks, r)[1], bar_width,alpha=opacity,color='black',label='Achieved')
     #Plot the minimum values of each observed sample
-    rects1 = ax1.bar(index + bar_width, house_selling_model(chunks, r)[0], bar_width, alpha=opacity,color='darkred',label='Optimal')
+    rects1 = plt.bar(index + bar_width, house_selling_model(chunks, r)[0], bar_width, alpha=opacity,color='darkred',label='Optimal')
     
     #Label
-    ax1.set_xlabel('Stops', fontsize = 50)
-    ax1.set_ylabel('Load Values', fontsize = 50)
-    ax1.set_title('Loads by Stop with N = {} for House Selling Model'.format(chunks), fontsize = 75)
-    ax1.set_xticks(index + bar_width / 2, tuple(range(1,n_groups_house+1)))
-    ax1.set_xlim([0-bar_width/2,index.size])
-    for p in ax1.patches:
-            ax1.annotate("%.2f" % p.get_height(), (p.get_x() + p.get_width() / 2., p.get_height()),
-                 ha='center', va='center', rotation=90, xytext=(0, 20), textcoords='offset points', fontsize = 15)
-    ax1.legend(prop={'size': 30})
+    #Label
+    plt.xlabel('Stops')
+    plt.ylabel('Load Values')
+    plt.title('Loads in each Run with N = {} for House Selling Model'.format(chunks), size = 20)
+    plt.xticks(index + (bar_width/2), tuple(range(1,n_groups_house+1)))
+    plt.xlim([0-bar_width/2,index.size])
+    plt.legend(prop={'size': 15})
+    plt.plot()
     
+
+    
+    plt.figure(figsize=(20,15))
     # Times Plot
     #Plot the achieved values of each observed sample
-    rects2 = ax2.bar(index, house_selling_model(chunks, r)[5], bar_width,alpha=opacity,color='black',label='Achieved')
+    rects2 = plt.bar(index, house_selling_model(chunks, r)[5], bar_width,alpha=opacity,color='darkblue',label='Time instance difference from optimal')
     
-    #Label
-    ax2.set_xlabel('Stops', fontsize = 15)
-    ax2.set_ylabel('Stopping Delay', fontsize = 15)
-    ax2.set_title('Stopping Delays by Stop with N = {} for House Selling Model'.format(chunks), fontsize = 75)
-    ax2.set_xticks(index, tuple(range(1,n_groups_house+1)))
-    ax2.set_xlim([0-bar_width/2,index.size])
-    for p in ax2.patches:
-            ax2.annotate("%.2f" % p.get_height(), (p.get_x() + p.get_width() / 2., p.get_height()),
-                 ha='center', va='center', xytext=(0, 20), textcoords='offset points', fontsize = 15)
-    ax2.legend(prop={'size': 30})
+    plt.xlabel('Stops')
+    plt.ylabel('Load Values')
+    plt.title('Times in each Run with N = {} for House Selling Model'.format(chunks), size = 20)
+    plt.xticks(index, tuple(range(1,n_groups_house+1)))
+    plt.xlim([0-bar_width/2,index.size])
+    plt.legend(prop={'size': 15})
+    plt.plot()
 
-    ax1.plot()
-    ax2.plot()
+    
+    
     plt.savefig('house_selling_figures/hs_{}.pdf'.format(chunks))
     
     #Display the dataframe
@@ -414,14 +410,17 @@ def house_selling_simulation_run(chunks, r):
     runs_frame = pd.DataFrame(runs_data, columns = ['Run','Optimal','Load when Offloading', 'Load Difference'])
     runs_frame.index += 1
 
-#     display(runs_frame)
+    display(runs_frame)
 
-    runs_frame.to_csv('house_selling_figures/dataframes/hs_data_{}.csv'.format(chunks))
+#     runs_frame.to_csv('house_selling_figures/dataframes/hs_data_{}.csv'.format(chunks))
+    
+
+    
 
 
 # # RANDOM AND SECRETARY MODELS Vs OPTIMAL
 
-# In[10]:
+# In[234]:
 
 
 #Plot the different models (random(P) for different probabilities and seecretary model) to compare with the optimal for each model
@@ -453,13 +452,13 @@ def avg_loads_by_stop(rpb_model, secretary_model, house_selling_model):
     x_ticks_labels = ['Optimal', 'Random(P = 0.05)','Random(P = 0.1)','Random(P = 0.2)','Random(P = 0.3)','Random(P = 0.5)', 'Secretary', 'House Selling']
     plt.xlabel('Models')
     plt.ylabel('Load Values')
-    plt.title('Avg Loads by Stop for each Model for selected Chunk')
+    plt.title('Avg Loads by Stop for each Model for selected Chunk', size=20)
     plt.xticks(np.arange(8) + bar_width, ('Optimal','Random(P = 0.05)','Random(P = 0.1)','Random(P = 0.2)','Random(P = 0.3)','Random(P = 0.5)', 'Secretary', 'House Selling'), rotation = 45)
     for p in ax.patches:
             ax.annotate("%.2f" % p.get_height(), (p.get_x() + p.get_width() / 2., p.get_height()),
                  ha='center', va='center', rotation=0, xytext=(0, 20), textcoords='offset points')
     
-    plt.legend()
+    plt.legend(prop={'size': 15})
     
     #plt.savefig('averages/Averages for chosen N.pdf')
     
@@ -480,7 +479,7 @@ def avg_loads_by_stop(rpb_model, secretary_model, house_selling_model):
     ret[np.where(runs_frame['Mean Load Difference'] == runs_frame['Mean Load Difference'].min())[0][0]].set_color('#404040')
     plt.xlabel('Models')
     plt.ylabel('Load Difference')
-    plt.title('Load Mean Differences')
+    plt.title('Load Mean Differences', size = 20)
     for p in ax1.patches:
             ax1.annotate("%.2f" % p.get_height(), (p.get_x() + p.get_width() / 2., p.get_height()),
                  ha='center', va='center', rotation=0, xytext=(0, 20), textcoords='offset points')
@@ -501,47 +500,47 @@ def avg_loads_by_stop(rpb_model, secretary_model, house_selling_model):
 
 
 
-# In[11]:
+# In[235]:
 
 
 #These are the Random(P) probability models
 #ALL COMBINATIONS OF CHUNKS AND PROBABILITIES
 #RUN THESE BEFORE PROCEEDING TO ANALYSIS
-# rpb_20 = [random_prob_model(20, 0.05),
-# random_prob_model(20, 0.1),
-# random_prob_model(20, 0.2),
-# random_prob_model(20, 0.3),
-# random_prob_model(20, 0.5)]
+rpb_20 = [random_prob_model(20, 0.05),
+random_prob_model(20, 0.1),
+random_prob_model(20, 0.2),
+random_prob_model(20, 0.3),
+random_prob_model(20, 0.5)]
 
-# rpb_50 = [random_prob_model(50, 0.05),
-# random_prob_model(50, 0.1),
-# random_prob_model(50, 0.2),
-# random_prob_model(50, 0.3),
-# random_prob_model(50, 0.5)]
+rpb_50 = [random_prob_model(50, 0.05),
+random_prob_model(50, 0.1),
+random_prob_model(50, 0.2),
+random_prob_model(50, 0.3),
+random_prob_model(50, 0.5)]
 
-# rpb_80 = [random_prob_model(80, 0.05),
-# random_prob_model(80, 0.1),
-# random_prob_model(80, 0.2),
-# random_prob_model(80, 0.3),
-# random_prob_model(80, 0.5)]
+rpb_80 = [random_prob_model(80, 0.05),
+random_prob_model(80, 0.1),
+random_prob_model(80, 0.2),
+random_prob_model(80, 0.3),
+random_prob_model(80, 0.5)]
 
-# rpb_100 = [random_prob_model(100, 0.05),
-# random_prob_model(100, 0.1),
-# random_prob_model(100, 0.2),
-# random_prob_model(100, 0.3),
-# random_prob_model(100, 0.5)]
+rpb_100 = [random_prob_model(100, 0.05),
+random_prob_model(100, 0.1),
+random_prob_model(100, 0.2),
+random_prob_model(100, 0.3),
+random_prob_model(100, 0.5)]
 
-# rpb_150 = [random_prob_model(150, 0.05),
-# random_prob_model(150, 0.1),
-# random_prob_model(150, 0.2),
-# random_prob_model(150, 0.3),
-# random_prob_model(150, 0.5)]
+rpb_150 = [random_prob_model(150, 0.05),
+random_prob_model(150, 0.1),
+random_prob_model(150, 0.2),
+random_prob_model(150, 0.3),
+random_prob_model(150, 0.5)]
 
-# rpb_200 = [random_prob_model(200, 0.05),
-# random_prob_model(200, 0.1),
-# random_prob_model(200, 0.2),
-# random_prob_model(200, 0.3),
-# random_prob_model(200, 0.5)]
+rpb_200 = [random_prob_model(200, 0.05),
+random_prob_model(200, 0.1),
+random_prob_model(200, 0.2),
+random_prob_model(200, 0.3),
+random_prob_model(200, 0.5)]
 
 
 #EXAMPLES, run the models by changing the chunk number (eg. rpb_200) and the square bracket value for the Probability
@@ -559,111 +558,14 @@ def avg_loads_by_stop(rpb_model, secretary_model, house_selling_model):
 #For the House Selling model define chunks and the factor r (eg r = 0.1)
 
 
-#MODELS
-# randomP_simulation_run(rpb_100[0],100)
-# secretary_simulation_run(100)
-# house_selling_simulation_run(100, 0)
-# avg_loads_by_stop(rpb_50, secretary_model(100), house_selling_model(100, 0.2))
+# #MODELS
+randomP_simulation_run(rpb_200[1],200)
+secretary_simulation_run(200)
+house_selling_simulation_run(200, 0)
+avg_loads_by_stop(rpb_200, secretary_model(200), house_selling_model(200, 0.015))
 
 
-# In[28]:
-
-
-def main():
-
-    user_input = str(input("Please enter the name of the .csv file you want to view: "))
-
-    print(file(user_input))
-    #Generate the dataset for the Random(P) Model
-    rpb_20 = [random_prob_model(20, 0.05),random_prob_model(20, 0.1),random_prob_model(20, 0.2),random_prob_model(20, 0.3),random_prob_model(20, 0.5)]
-    rpb_50 = [random_prob_model(50, 0.05),random_prob_model(50, 0.1),random_prob_model(50, 0.2),random_prob_model(50, 0.3),random_prob_model(50, 0.5)]
-    rpb_80 = [random_prob_model(80, 0.05),random_prob_model(80, 0.1),random_prob_model(80, 0.2),random_prob_model(80, 0.3),random_prob_model(80, 0.5)]
-    rpb_100 = [random_prob_model(100, 0.05),random_prob_model(100, 0.1),random_prob_model(100, 0.2),random_prob_model(100, 0.3),random_prob_model(100, 0.5)]
-    rpb_150 = [random_prob_model(150, 0.05),random_prob_model(150, 0.1),random_prob_model(150, 0.2),random_prob_model(150, 0.3),random_prob_model(150, 0.5)]
-    rpb_200 = [random_prob_model(200, 0.05),random_prob_model(200, 0.1),random_prob_model(200, 0.2),random_prob_model(200, 0.3),random_prob_model(200, 0.5)]
-
-    loop = True
-
-    while(loop):
-
-        selection = str(input("You can choose from:\n 1 = Random(P) Model\n 2 = Secretary Model\n 3 = House Selling Model\n 4 = Average of Models\nEnter your selection: "))
-
-        if selection == '1':
-            chunk_selection = int(input("Please enter the number of chunks you want to analyze. You can choose from [20,50,80,100,150,200]: "))
-            if chunk_selection == 20:
-                probability_selection = int(input("Please enter the probability you want.\n\nYou can choose from:\n 0 = 0.05\n 1 = 0.1\n 2 = 0.2\n 3 = 0.3\n 4 = 0.5\n\nEnter your selection: "))
-                randomP_simulation_run(rpb_20[probability_selection], chunk_selection)
-            if chunk_selection == 50:
-                probability_selection = int(input("Please enter the probability you want.\n\n\nYou can choose from:\n 0 = 0.05\n 1 = 0.1\n 2 = 0.2\n 3 = 0.3\n 4 = 0.5\n\nEnter your selection: "))
-                randomP_simulation_run(rpb_50[probability_selection], chunk_selection)
-            if chunk_selection == 80:
-                probability_selection = int(input("Please enter the probability you want.\n\n\nYou can choose from:\n 0 = 0.05\n 1 = 0.1\n 2 = 0.2\n 3 = 0.3\n 4 = 0.5\n\nEnter your selection: "))
-                randomP_simulation_run(rpb_80[probability_selection], chunk_selection)
-            if chunk_selection == 100:
-                probability_selection = int(input("Please enter the probability you want.\n\n\nYou can choose from:\n 0 = 0.05\n 1 = 0.1\n 2 = 0.2\n 3 = 0.3\n 4 = 0.5\n\nEnter your selection: "))
-                randomP_simulation_run(rpb_100[probability_selection], chunk_selection)
-            if chunk_selection == 150:
-                probability_selection = int(input("Please enter the probability you want.\n\n\nYou can choose from:\n 0 = 0.05\n 1 = 0.1\n 2 = 0.2\n 3 = 0.3\n 4 = 0.5\n\nEnter your selection: "))
-                randomP_simulation_run(rpb_150[probability_selection], chunk_selection)
-            if chunk_selection == 200:
-                probability_selection = int(input("Please enter the probability you want.\n\n\nYou can choose from:\n 0 = 0.05\n 1 = 0.1\n 2 = 0.2\n 3 = 0.3\n 4 = 0.5\n\nEnter your selection: "))
-                randomP_simulation_run(rpb_200[probability_selection], chunk_selection)
-            print("\nYour result figures have been saved. You can view them in the /randomp_figures/ folder!\n\n")
-        elif selection == '2':
-            chunk_selection = int(input("Please enter the number of chunks you want to analyze. You can choose from [20,50,80,100,150,200]: "))
-            secretary_simulation_run(chunk_selection)
-            print("\nYour result figures have been saved. You can view them in the /secretary_figures/ folder!\n\n")
-        elif selection == '3':
-            chunk_selection = int(input("Please enter the number of chunks you want to analyze. You can choose from [20,50,80,100,150,200]: "))
-            r_factor = float(input("Please enter the R factor you want to use: "))
-            house_selling_simulation_run(chunk_selection,r_factor)
-            print("\nYour result figures have been saved. You can view them in the /house_selling_figures/ folder!\nDataframe .csv is in the /dataframes/ folder\n\n")
-        elif selection == '4':
-            
-            chunk_selection = int(input("Please enter the number of chunks you want to analyze. You can choose from [20,50,80,100,150,200]: "))
-
-            if chunk_selection == 20:
-                r_factor = float(input("Please enter the R factor you want to use: "))
-                avg_loads_by_stop(rpb_20, secretary_model(chunk_selection), house_selling_model(chunk_selection, r_factor))
-            if chunk_selection == 50:
-                r_factor = float(input("Please enter the R factor you want to use: "))
-                avg_loads_by_stop(rpb_50, secretary_model(chunk_selection), house_selling_model(chunk_selection, r_factor))
-            if chunk_selection == 80:
-                r_factor = float(input("Please enter the R factor you want to use: "))
-                avg_loads_by_stop(rpb_80, secretary_model(chunk_selection), house_selling_model(chunk_selection, r_factor))
-            if chunk_selection == 100:
-                r_factor = float(input("Please enter the R factor you want to use: "))
-                avg_loads_by_stop(rpb_100, secretary_model(chunk_selection), house_selling_model(chunk_selection, r_factor))
-            if chunk_selection == 150:
-                r_factor = float(input("Please enter the R factor you want to use: "))
-                avg_loads_by_stop(rpb_150, secretary_model(chunk_selection), house_selling_model(chunk_selection, r_factor))
-            if chunk_selection == 200:
-                r_factor = float(input("Please enter the R factor you want to use: "))
-                avg_loads_by_stop(rpb_200, secretary_model(chunk_selection), house_selling_model(chunk_selection, r_factor))
-                
-            print("\nYour result figures have been saved. You can view them in the /averages/ folder!\nDataframe .csv is in the /dataframes/ folder\n\n")
-        else:
-            print("Error! Please enter a valid selection!\n")
-
-
-        repeat = str(input("Do you want to repeat? If not type 'exit' or 'N' to go back. Else enter 'Y' to continue: "))
-        
-    
-        while (repeat != 'Y' and repeat != 'N' and repeat != 'exit' ):
-            print("Sorry! I didn't understand that! :( Please enter a valid selection!\n")
-            repeat = str(input("Do you want to repeat? If not type 'exit' or 'N' to go back. Else enter 'Y' to continue: "))
-        
-        if repeat == 'Y':
-            loop = True
-        elif repeat == 'N' or repeat == 'exit':
-            print("Terminating......")
-            loop = False
-            return
-                
-        
-
-
-# In[29]:
+# In[13]:
 
 
 if __name__ == "__main__":
