@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[71]:
+# In[ ]:
 
 
 import numpy as np
@@ -38,7 +38,7 @@ get_ipython().run_line_magic('matplotlib', 'inline')
 sns.set()
 
 
-# In[72]:
+# In[ ]:
 
 
 #Load the dataset with the calculated differences Y[t], ommit the first value because difference is NaN and print the head()
@@ -59,7 +59,7 @@ def file(fileinput):
 
 # # Code for the Random(p) Problem
 
-# In[73]:
+# In[ ]:
 
 
 def random_prob_model(counter, probability):
@@ -120,7 +120,7 @@ def random_prob_model(counter, probability):
 
 # # Code for Secretary Model
 
-# In[74]:
+# In[ ]:
 
 
 def secretary_model(counter):
@@ -183,7 +183,7 @@ def secretary_model(counter):
 
 # # Code for the House Selling Model
 
-# In[75]:
+# In[ ]:
 
 
 #Without Dataset
@@ -241,7 +241,7 @@ def house_selling_model(counter, r):
 
 # # RUNS AND VALUES SIMULATIONS FOR MODELS
 
-# In[228]:
+# In[ ]:
 
 
 #Simulate the random prob model by defining the rpb to be executed
@@ -420,7 +420,7 @@ def house_selling_simulation_run(chunks, r):
 
 # # RANDOM AND SECRETARY MODELS Vs OPTIMAL
 
-# In[234]:
+# In[ ]:
 
 
 #Plot the different models (random(P) for different probabilities and seecretary model) to compare with the optimal for each model
@@ -497,12 +497,6 @@ def avg_loads_by_stop(rpb_model, secretary_model, house_selling_model):
 # In[ ]:
 
 
-
-
-
-# In[235]:
-
-
 #These are the Random(P) probability models
 #ALL COMBINATIONS OF CHUNKS AND PROBABILITIES
 #RUN THESE BEFORE PROCEEDING TO ANALYSIS
@@ -559,13 +553,108 @@ random_prob_model(200, 0.5)]
 
 
 # #MODELS
-randomP_simulation_run(rpb_200[1],200)
-secretary_simulation_run(200)
-house_selling_simulation_run(200, 0)
-avg_loads_by_stop(rpb_200, secretary_model(200), house_selling_model(200, 0.015))
+# randomP_simulation_run(rpb_200[1],200)
+# secretary_simulation_run(200)
+# house_selling_simulation_run(200, 0)
+# avg_loads_by_stop(rpb_200, secretary_model(200), house_selling_model(200, 0.015))
 
 
-# In[13]:
+# In[ ]:
+
+
+def main():
+
+    user_input = str(input("Please enter the name of the .csv file you want to view: "))
+
+    print(file(user_input))
+    #Generate the dataset for the Random(P) Model
+    rpb_20 = [random_prob_model(20, 0.05),random_prob_model(20, 0.1),random_prob_model(20, 0.2),random_prob_model(20, 0.3),random_prob_model(20, 0.5)]
+    rpb_50 = [random_prob_model(50, 0.05),random_prob_model(50, 0.1),random_prob_model(50, 0.2),random_prob_model(50, 0.3),random_prob_model(50, 0.5)]
+    rpb_80 = [random_prob_model(80, 0.05),random_prob_model(80, 0.1),random_prob_model(80, 0.2),random_prob_model(80, 0.3),random_prob_model(80, 0.5)]
+    rpb_100 = [random_prob_model(100, 0.05),random_prob_model(100, 0.1),random_prob_model(100, 0.2),random_prob_model(100, 0.3),random_prob_model(100, 0.5)]
+    rpb_150 = [random_prob_model(150, 0.05),random_prob_model(150, 0.1),random_prob_model(150, 0.2),random_prob_model(150, 0.3),random_prob_model(150, 0.5)]
+    rpb_200 = [random_prob_model(200, 0.05),random_prob_model(200, 0.1),random_prob_model(200, 0.2),random_prob_model(200, 0.3),random_prob_model(200, 0.5)]
+
+    loop = True
+
+    while(loop):
+
+        selection = str(input("You can choose from:\n 1 = Random(P) Model\n 2 = Secretary Model\n 3 = House Selling Model\n 4 = Average of Models\nEnter your selection: "))
+
+        if selection == '1':
+            chunk_selection = int(input("Please enter the number of chunks you want to analyze. You can choose from [20,50,80,100,150,200]: "))
+            if chunk_selection == 20:
+                probability_selection = int(input("Please enter the probability you want.\n\nYou can choose from:\n 0 = 0.05\n 1 = 0.1\n 2 = 0.2\n 3 = 0.3\n 4 = 0.5\n\nEnter your selection: "))
+                randomP_simulation_run(rpb_20[probability_selection], chunk_selection)
+            if chunk_selection == 50:
+                probability_selection = int(input("Please enter the probability you want.\n\n\nYou can choose from:\n 0 = 0.05\n 1 = 0.1\n 2 = 0.2\n 3 = 0.3\n 4 = 0.5\n\nEnter your selection: "))
+                randomP_simulation_run(rpb_50[probability_selection], chunk_selection)
+            if chunk_selection == 80:
+                probability_selection = int(input("Please enter the probability you want.\n\n\nYou can choose from:\n 0 = 0.05\n 1 = 0.1\n 2 = 0.2\n 3 = 0.3\n 4 = 0.5\n\nEnter your selection: "))
+                randomP_simulation_run(rpb_80[probability_selection], chunk_selection)
+            if chunk_selection == 100:
+                probability_selection = int(input("Please enter the probability you want.\n\n\nYou can choose from:\n 0 = 0.05\n 1 = 0.1\n 2 = 0.2\n 3 = 0.3\n 4 = 0.5\n\nEnter your selection: "))
+                randomP_simulation_run(rpb_100[probability_selection], chunk_selection)
+            if chunk_selection == 150:
+                probability_selection = int(input("Please enter the probability you want.\n\n\nYou can choose from:\n 0 = 0.05\n 1 = 0.1\n 2 = 0.2\n 3 = 0.3\n 4 = 0.5\n\nEnter your selection: "))
+                randomP_simulation_run(rpb_150[probability_selection], chunk_selection)
+            if chunk_selection == 200:
+                probability_selection = int(input("Please enter the probability you want.\n\n\nYou can choose from:\n 0 = 0.05\n 1 = 0.1\n 2 = 0.2\n 3 = 0.3\n 4 = 0.5\n\nEnter your selection: "))
+                randomP_simulation_run(rpb_200[probability_selection], chunk_selection)
+            print("\nYour result figures have been saved. You can view them in the /randomp_figures/ folder!\n\n")
+        elif selection == '2':
+            chunk_selection = int(input("Please enter the number of chunks you want to analyze. You can choose from [20,50,80,100,150,200]: "))
+            secretary_simulation_run(chunk_selection)
+            print("\nYour result figures have been saved. You can view them in the /secretary_figures/ folder!\n\n")
+        elif selection == '3':
+            chunk_selection = int(input("Please enter the number of chunks you want to analyze. You can choose from [20,50,80,100,150,200]: "))
+            r_factor = float(input("Please enter the R factor you want to use: "))
+            house_selling_simulation_run(chunk_selection,r_factor)
+            print("\nYour result figures have been saved. You can view them in the /house_selling_figures/ folder!\nDataframe .csv is in the /dataframes/ folder\n\n")
+        elif selection == '4':
+            
+            chunk_selection = int(input("Please enter the number of chunks you want to analyze. You can choose from [20,50,80,100,150,200]: "))
+
+            if chunk_selection == 20:
+                r_factor = float(input("Please enter the R factor you want to use: "))
+                avg_loads_by_stop(rpb_20, secretary_model(chunk_selection), house_selling_model(chunk_selection, r_factor))
+            if chunk_selection == 50:
+                r_factor = float(input("Please enter the R factor you want to use: "))
+                avg_loads_by_stop(rpb_50, secretary_model(chunk_selection), house_selling_model(chunk_selection, r_factor))
+            if chunk_selection == 80:
+                r_factor = float(input("Please enter the R factor you want to use: "))
+                avg_loads_by_stop(rpb_80, secretary_model(chunk_selection), house_selling_model(chunk_selection, r_factor))
+            if chunk_selection == 100:
+                r_factor = float(input("Please enter the R factor you want to use: "))
+                avg_loads_by_stop(rpb_100, secretary_model(chunk_selection), house_selling_model(chunk_selection, r_factor))
+            if chunk_selection == 150:
+                r_factor = float(input("Please enter the R factor you want to use: "))
+                avg_loads_by_stop(rpb_150, secretary_model(chunk_selection), house_selling_model(chunk_selection, r_factor))
+            if chunk_selection == 200:
+                r_factor = float(input("Please enter the R factor you want to use: "))
+                avg_loads_by_stop(rpb_200, secretary_model(chunk_selection), house_selling_model(chunk_selection, r_factor))
+                
+            print("\nYour result figures have been saved. You can view them in the /averages/ folder!\nDataframe .csv is in the /dataframes/ folder\n\n")
+        else:
+            print("Error! Please enter a valid selection!\n")
+
+
+        repeat = str(input("Do you want to repeat? If not type 'exit' or 'N' to go back. Else enter 'Y' to continue: "))
+        
+    
+        while (repeat != 'Y' and repeat != 'N' and repeat != 'exit' ):
+            print("Sorry! I didn't understand that! :( Please enter a valid selection!\n")
+            repeat = str(input("Do you want to repeat? If not type 'exit' or 'N' to go back. Else enter 'Y' to continue: "))
+        
+        if repeat == 'Y':
+            loop = True
+        elif repeat == 'N' or repeat == 'exit':
+            print("Terminating......")
+            loop = False
+            return
+
+
+# In[ ]:
 
 
 if __name__ == "__main__":
