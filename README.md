@@ -1,10 +1,18 @@
-# Optimal-Stopping-Theory-Models
+# Time Series and Optimal-Stopping-Theory-Models Anlysis
 
-This executable was built using ipython module.
+## Executables
+
+simulation_tool.py
+time-series_analysis.py
+
+These executables were built using ipython module.
 To run open a command prompt window in the directory and run:
 
 ```bash
-$ ipyhton tool.py
+$ ipyhton simulation_tool.py
+```
+```bash
+$ ipyhton time-series_analysis.py
 ```
 
 Follow the instructions on the screen.
