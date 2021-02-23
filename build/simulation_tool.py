@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[ ]:
+# In[6]:
 
 
 import numpy as np
@@ -38,7 +38,7 @@ get_ipython().run_line_magic('matplotlib', 'inline')
 sns.set()
 
 
-# In[ ]:
+# In[7]:
 
 
 #Load the dataset with the calculated differences Y[t], ommit the first value because difference is NaN and print the head()
@@ -59,7 +59,7 @@ def file(fileinput):
 
 # # Code for the Random(p) Problem
 
-# In[ ]:
+# In[8]:
 
 
 def random_prob_model(counter, probability):
@@ -120,7 +120,7 @@ def random_prob_model(counter, probability):
 
 # # Code for Secretary Model
 
-# In[ ]:
+# In[9]:
 
 
 def secretary_model(counter):
@@ -183,7 +183,7 @@ def secretary_model(counter):
 
 # # Code for the House Selling Model
 
-# In[ ]:
+# In[10]:
 
 
 #Without Dataset
@@ -239,7 +239,7 @@ def house_selling_model(counter, r):
     return minimums, load_list, load_differences, minimums_times, time_list, times_differences
 
 
-# In[ ]:
+# In[11]:
 
 
 # a = np.full(shape=10, fill_value=0, dtype=np.float)
@@ -256,7 +256,7 @@ def house_selling_model(counter, r):
 
 # # RUNS AND VALUES SIMULATIONS FOR MODELS
 
-# In[ ]:
+# In[17]:
 
 
 #Simulate the random prob model by defining the rpb to be executed
@@ -285,7 +285,7 @@ def randomP_simulation_run(chunk_func, N):
     plt.yticks(fontsize= 20)
     plt.xlim([0-bar_width/2,index.size])
     plt.plot()
-    plt.legend(prop={'size': 15})
+    plt.legend(prop={'size': 25})
     plt.savefig('randomp_figures/random(p)_{}.png'.format(N))
 
     
@@ -303,7 +303,7 @@ def randomP_simulation_run(chunk_func, N):
     plt.yticks(fontsize= 20)
     plt.xlim([0-bar_width/2,index.size])
     plt.plot()  
-    plt.legend(prop={'size': 15})
+    plt.legend(prop={'size': 25})
 
     plt.savefig('randomp_figures/random(p)_times_{}.png'.format(N))
     
@@ -347,7 +347,7 @@ def secretary_simulation_run(chunks):
     plt.yticks(fontsize= 20)
     plt.xlim([0-bar_width/2,index.size])
     plt.plot()
-    plt.legend(prop={'size': 15})
+    plt.legend(prop={'size': 25})
     plt.savefig('secretary_figures/secretary_{}.png'.format(chunks))
 
 
@@ -367,7 +367,7 @@ def secretary_simulation_run(chunks):
     plt.yticks(fontsize= 20)
     plt.xlim([0-bar_width/2,index.size])
     plt.plot()
-    plt.legend(prop={'size': 15})
+    plt.legend(prop={'size': 25})
 
     
 #    ax2.plot()
@@ -409,7 +409,7 @@ def house_selling_simulation_run(chunks, r):
     plt.xticks(fontsize= 20)
     plt.yticks(fontsize= 20)
     plt.xlim([0-bar_width/2,index.size])
-    plt.legend(prop={'size': 15})
+    plt.legend(prop={'size': 25})
     plt.savefig('house_selling_figures/hs_{}.png'.format(chunks))
     
     plt.figure(figsize=(30,25))
@@ -424,7 +424,7 @@ def house_selling_simulation_run(chunks, r):
     plt.xticks(fontsize= 20)
     plt.yticks(fontsize= 20)
     plt.xlim([0-bar_width/2,index.size])
-    plt.legend(prop={'size': 15})
+    plt.legend(prop={'size': 25})
     plt.plot()
 
     
@@ -447,7 +447,7 @@ def house_selling_simulation_run(chunks, r):
 
 # # RANDOM AND SECRETARY MODELS Vs OPTIMAL
 
-# In[51]:
+# In[18]:
 
 
 #Plot the different models (random(P) for different probabilities and seecretary model) to compare with the optimal for each model
@@ -487,7 +487,7 @@ def avg_loads_by_stop(rpb_model, secretary_model, house_selling_model):
             ax.annotate("%.2f" % p.get_height(), (p.get_x() + p.get_width() / 2., p.get_height()),
                  ha='center', va='center', rotation=0, xytext=(0, 20), textcoords='offset points')
     
-    plt.legend(prop={'size': 15})
+    plt.legend(prop={'size': 25})
     
     #plt.savefig('averages/Averages for chosen N.pdf')
     
@@ -525,7 +525,7 @@ def avg_loads_by_stop(rpb_model, secretary_model, house_selling_model):
     
 
 
-# In[52]:
+# In[19]:
 
 
 #These are the Random(P) probability models
@@ -599,7 +599,7 @@ def avg_loads_by_stop(rpb_model, secretary_model, house_selling_model):
 # 200 0.015
 
 
-# In[53]:
+# In[20]:
 
 
 def main():
@@ -694,7 +694,7 @@ def main():
             return
 
 
-# In[54]:
+# In[23]:
 
 
 if __name__ == "__main__":

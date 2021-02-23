@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[2]:
+# In[1]:
 
 
 import numpy as np
@@ -37,7 +37,7 @@ get_ipython().run_line_magic('matplotlib', 'inline')
 sns.set()
 
 
-# In[3]:
+# In[2]:
 
 
 df = pd.read_csv("data/" + "3" + ".csv",skiprows=1)
@@ -50,7 +50,7 @@ df.columns = ['date', 'value']
 df.head()
 
 
-# In[4]:
+# In[3]:
 
 
 df.date = pd.to_datetime(df.date)
@@ -64,16 +64,17 @@ df.head()
 
 
 
-# In[12]:
+# In[10]:
 
 
 df[['value']].plot(figsize = (20,10), linewidth = 5, fontsize = 20)
 plt.xlabel('Date', fontsize = 30)
 plt.ylabel('Load Value', fontsize = 30)
 plt.title('Load Value Time Series', fontsize = 40)
+plt.legend(loc=2, prop={'size': 20})
 
 
-# In[14]:
+# In[11]:
 
 
 print("Smoothing")
@@ -82,15 +83,17 @@ values.rolling(14).mean().plot(figsize = (20,10), linewidth = 5, fontsize = 20)
 plt.xlabel('Date', fontsize = 30)
 plt.ylabel('Load Value', fontsize = 30)
 plt.title('Smoothed out Time Series', fontsize = 40)
+plt.legend(loc=2, prop={'size': 20})
 
 
-# In[15]:
+# In[12]:
 
 
 values.diff().plot(figsize = (20,10), linewidth = 5, fontsize = 20)
 plt.xlabel('Date', fontsize = 30)
 plt.ylabel('Load Value', fontsize = 30)
 plt.title('Differenced Time Series', fontsize = 40)
+plt.legend(loc=2, prop={'size': 20})
 
 
 # In[16]:
