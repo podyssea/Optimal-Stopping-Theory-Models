@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[24]:
+# In[19]:
 
 
 import numpy as np
@@ -37,7 +37,7 @@ get_ipython().run_line_magic('matplotlib', 'inline')
 sns.set()
 
 
-# In[54]:
+# In[20]:
 
 
 #Load the dataset with the calculated differences Y[t], ommit the first value because difference is NaN and print the head()
@@ -52,7 +52,7 @@ def file(fileinput):
     return df
 
 
-# In[57]:
+# In[21]:
 
 
 def main():
@@ -95,15 +95,17 @@ def main():
     #Smoothed out seasonality and noise by trying hourly seasonality-24 hrs
     #Removed seasonality
     #There is a constant trend in the beginnign and then a spike at the end
+    print("Smoothing")
     values = df[['X[t]']]
-    values.rolling(24).mean().plot(figsize = (20,10), linewidth = 5, fontsize = 20)
+    values.rolling(14).mean().plot(figsize = (20,10), linewidth = 5, fontsize = 20)
     plt.xlabel('Date', fontsize = 20)
 
     #Differences
     #Plotted differences to clearly see the points of trends on the graph
     #-------------------------------------------------------------------
+    print("Differencing")
     diff = df[['Y[t]']]
-    diff.rolling(24).mean().plot(figsize = (20,10), linewidth = 5, fontsize = 20)
+    diff.rolling(14).mean().plot(figsize = (20,10), linewidth = 5, fontsize = 20)
     plt.xlabel('Date', fontsize = 20)
 
     #Removed noise and seasonality from differences
@@ -161,7 +163,7 @@ def main():
     return
 
 
-# In[58]:
+# In[22]:
 
 
 if __name__ == "__main__":
