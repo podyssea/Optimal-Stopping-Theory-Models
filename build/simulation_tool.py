@@ -256,7 +256,7 @@ def house_selling_model(counter, r):
 
 # # RUNS AND VALUES SIMULATIONS FOR MODELS
 
-# In[26]:
+# In[8]:
 
 
 #Simulate the random prob model by defining the rpb to be executed
@@ -447,7 +447,7 @@ def house_selling_simulation_run(chunks, r):
 
 # # RANDOM AND SECRETARY MODELS Vs OPTIMAL
 
-# In[69]:
+# In[9]:
 
 
 #Plot the different models (random(P) for different probabilities and seecretary model) to compare with the optimal for each model
@@ -489,7 +489,7 @@ def avg_loads_by_stop(rpb_model, secretary_model, house_selling_model):
     
     plt.legend(prop={'size': 25})
     
-    #plt.savefig('averages/Averages for chosen N.pdf')
+    plt.savefig('averages/Averages for chosen N.pdf')
     
     #Display the dataframe
     runs_data = {'Model':  ['Random(P = 0.05)','Random(P = 0.1)','Random(P = 0.2)','Random(P = 0.3)','Random(P = 0.5)', 'Secretary', 'House Selling'],
@@ -525,7 +525,7 @@ def avg_loads_by_stop(rpb_model, secretary_model, house_selling_model):
     
 
 
-# In[70]:
+# In[10]:
 
 
 #These are the Random(P) probability models
@@ -599,7 +599,7 @@ def avg_loads_by_stop(rpb_model, secretary_model, house_selling_model):
 # 200 0.015
 
 
-# In[71]:
+# In[11]:
 
 
 def main():
@@ -694,7 +694,7 @@ def main():
             return
 
 
-# In[72]:
+# In[12]:
 
 
 if __name__ == "__main__":
