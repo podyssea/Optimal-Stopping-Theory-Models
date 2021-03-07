@@ -9,13 +9,18 @@ These executables were built using ipython module.
 To run open a command prompt window in the directory and run:
 
 ```bash
-$ ipyhton simulation_tool.py
+$ ipython simulation_tool.py
 ```
 ```bash
-$ ipyhton time-series_analysis.py
+$ ipython time-series_analysis.py
+```
+In case there is a change in the code you can convert the .ipynbs to scripts by running the following command:
+
+```bash
+$ ipython nbconvert --to script thescript.ipynb
 ```
 
-Follow the instructions on the screen.
+Follow the instructions on the screen when you run the executables.
 
 In case you don't have ipython install it with:
 
