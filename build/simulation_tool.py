@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[1]:
+# In[12]:
 
 
 import numpy as np
@@ -34,6 +34,7 @@ from IPython.core.display import display, HTML
 from IPython.display import display, Markdown, clear_output
 import ipywidgets as widgets
 from ipywidgets import interact, interactive, fixed, interact_manual
+import time
 get_ipython().run_line_magic('matplotlib', 'inline')
 sns.set()
 
@@ -256,7 +257,7 @@ def house_selling_model(counter, r):
 
 # # RUNS AND VALUES SIMULATIONS FOR MODELS
 
-# In[8]:
+# In[7]:
 
 
 #Simulate the random prob model by defining the rpb to be executed
@@ -286,7 +287,7 @@ def randomP_simulation_run(chunk_func, N):
     plt.xlim([0-bar_width/2,index.size])
     plt.plot()
     plt.legend(prop={'size': 25})
-    plt.savefig('randomp_figures/random(p)_{}.png'.format(N))
+    plt.savefig('randomp_figures/random(p)_{}' + time.strftime("%Y-%m-%d %H%M%S") + '.png'.format(N))
 
     
     
@@ -305,7 +306,7 @@ def randomP_simulation_run(chunk_func, N):
     plt.plot()  
     plt.legend(prop={'size': 25})
 
-    plt.savefig('randomp_figures/random(p)_times_{}.png'.format(N))
+    plt.savefig('randomp_figures/random(p)_times_{}' + time.strftime("%Y-%m-%d %H%M%S") + '.png'.format(N))
     
     #Display the dataframe
     runs_data = {'Run':  list(range(1,len(chunk_func[0])+1)),'Optimal': chunk_func[0],'Load when Offloading': chunk_func[1],
@@ -316,7 +317,7 @@ def randomP_simulation_run(chunk_func, N):
 
     display(runs_frame)
     
-    runs_frame.to_csv('randomp_figures/dataframes/randomp_data_{}.csv'.format(N))
+    runs_frame.to_csv('randomp_figures/dataframes/randomp_data_{}' + time.strftime("%Y-%m-%d %H%M%S") + '.csv'.format(N))
 
 
 #Simulate the random prob model by defining the rpb to be executed
@@ -348,7 +349,7 @@ def secretary_simulation_run(chunks):
     plt.xlim([0-bar_width/2,index.size])
     plt.plot()
     plt.legend(prop={'size': 25})
-    plt.savefig('secretary_figures/secretary_{}.png'.format(chunks))
+    plt.savefig('secretary_figures/secretary_{}' + time.strftime("%Y-%m-%d %H%M%S") + '.png'.format(chunks))
 
 
 
@@ -371,7 +372,7 @@ def secretary_simulation_run(chunks):
 
     
 #    ax2.plot()
-    plt.savefig('secretary_figures/secretary_times_{}.png'.format(chunks))
+    plt.savefig('secretary_figures/secretary_times_{}' + time.strftime("%Y-%m-%d %H%M%S") + '.png'.format(chunks))
     
     
     #Display the dataframe
@@ -383,7 +384,7 @@ def secretary_simulation_run(chunks):
 
     display(runs_frame)
     
-    runs_frame.to_csv('secretary_figures/dataframes/secretary_data_{}.csv'.format(chunks))
+    runs_frame.to_csv('secretary_figures/dataframes/secretary_data_{}' + time.strftime("%Y-%m-%d %H%M%S") + '.csv'.format(chunks))
 
 def house_selling_simulation_run(chunks, r):
     n_groups_house = len(house_selling_model(chunks, r)[0])
@@ -410,7 +411,7 @@ def house_selling_simulation_run(chunks, r):
     plt.yticks(fontsize= 30)
     plt.xlim([0-bar_width/2,index.size])
     plt.legend(prop={'size': 25})
-    plt.savefig('house_selling_figures/hs_{}.png'.format(chunks))
+    plt.savefig('house_selling_figures/hs_{}' + time.strftime("%Y-%m-%d %H%M%S") + '.png'.format(chunks))
     
     plt.figure(figsize=(30,25))
     # Times Plot
@@ -428,7 +429,7 @@ def house_selling_simulation_run(chunks, r):
     plt.plot()
 
     
-    plt.savefig('house_selling_figures/hs_times_{}.png'.format(chunks))
+    plt.savefig('house_selling_figures/hs_times_{}' + time.strftime("%Y-%m-%d %H%M%S") + '.png'.format(chunks))
     
     #Display the dataframe
     runs_data = {'Run':  list(range(1,len(house_selling_model(chunks, r)[0])+1)),'Optimal': house_selling_model(chunks, r)[0],'Load when Offloading': house_selling_model(chunks, r)[1],
@@ -439,7 +440,7 @@ def house_selling_simulation_run(chunks, r):
 
     display(runs_frame)
 
-#     runs_frame.to_csv('house_selling_figures/dataframes/hs_data_{}.csv'.format(chunks))
+    runs_frame.to_csv('house_selling_figures/dataframes/hs_data_{}' + time.strftime("%Y-%m-%d %H%M%S") + '.csv'.format(chunks))
     
 
     
@@ -447,7 +448,7 @@ def house_selling_simulation_run(chunks, r):
 
 # # RANDOM AND SECRETARY MODELS Vs OPTIMAL
 
-# In[9]:
+# In[8]:
 
 
 #Plot the different models (random(P) for different probabilities and seecretary model) to compare with the optimal for each model
@@ -489,7 +490,7 @@ def avg_loads_by_stop(rpb_model, secretary_model, house_selling_model):
     
     plt.legend(prop={'size': 25})
     
-    plt.savefig('averages/Averages for chosen N.pdf')
+    plt.savefig('averages/Averages for chosen N' + time.strftime("%Y-%m-%d %H%M%S") + '.png')
     
     #Display the dataframe
     runs_data = {'Model':  ['Random(P = 0.05)','Random(P = 0.1)','Random(P = 0.2)','Random(P = 0.3)','Random(P = 0.5)', 'Secretary', 'House Selling'],
@@ -516,16 +517,16 @@ def avg_loads_by_stop(rpb_model, secretary_model, house_selling_model):
                  ha='center', va='center', rotation=0, xytext=(0, 20), textcoords='offset points')
     
     
-    plt.savefig('averages/Best_Model.pdf')
+    plt.savefig('averages/Best_Model' + time.strftime("%Y-%m-%d %H%M%S") + '.png')
     
     display(runs_frame)
-    runs_frame.to_csv('averages/dataframes/averages_data.csv')
+    runs_frame.to_csv('averages/dataframes/averages_data' + time.strftime("%Y-%m-%d %H%M%S") + '.png')
     
 
     
 
 
-# In[10]:
+# In[9]:
 
 
 #These are the Random(P) probability models
@@ -599,7 +600,7 @@ def avg_loads_by_stop(rpb_model, secretary_model, house_selling_model):
 # 200 0.015
 
 
-# In[11]:
+# In[10]:
 
 
 def main():
@@ -694,7 +695,7 @@ def main():
             return
 
 
-# In[12]:
+# In[ ]:
 
 
 if __name__ == "__main__":

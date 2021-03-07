@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[19]:
+# In[51]:
 
 
 import numpy as np
@@ -31,18 +31,16 @@ from jupyterthemes import get_themes
 import jupyterthemes as jt
 from jupyterthemes.stylefx import set_nb_theme
 from IPython.core.display import display, HTML
-#display(HTML("<style>.container { width:100% !important; }</style>"))
-#!{sys.executable} -m pip install dataframe_image
+import time
 get_ipython().run_line_magic('matplotlib', 'inline')
 sns.set()
 
 
-# In[20]:
+# In[52]:
 
 
 #Load the dataset with the calculated differences Y[t], ommit the first value because difference is NaN and print the head()
 
-# fileinput = str(input("Please enter the name of the .csv file you want to view: "))
 def file(fileinput):
     if not ".csv" in fileinput:
         fileinput = "data/" + fileinput + ".csv"
@@ -52,7 +50,7 @@ def file(fileinput):
     return df
 
 
-# In[21]:
+# In[53]:
 
 
 def main():
@@ -61,109 +59,54 @@ def main():
 
     df = file(user_input)
     
-    df['difference'] = df.iloc[:,1].diff()
-    df = df.iloc[1:]
     df.head()
     #Rename the columns
-    df.columns = ['date', 'X[t]', 'Y[t]']
+    df.columns = ['date', 'value']
     df.head()
-
+    
     df.date = pd.to_datetime(df.date)
     df.set_index('date', inplace=True)
     df.head()
 
-    #Plot the values X[t] and difference Y[t] on the same plot
-    df.plot(figsize = (20,10), linewidth = 5, fontsize = 20)
-    plt.xlabel('Year', fontsize = 20)
+    plt.figure()
+    df[['value']].plot(figsize = (20,10), linewidth = 5, fontsize = 20)
+    plt.xlabel('Date', fontsize = 30)
+    plt.ylabel('Load Value', fontsize = 30)
+    plt.title('Load Value Time Series', fontsize = 40)
+    plt.legend(loc=2, prop={'size': 20})
+    plt.savefig('timeseries_analysis/time_series_data' + time.strftime("%Y-%m-%d %H%M%S") + '.png')
 
-    #Plot them on different plots to see trends more clearly
-    #Specific trend in the values plot
-    #Starts slightly higher and suddenly drops before spiking
-    #There is a spike after 10 days___05/04/2014 - 14/04/2014
-    #Huge spike at the end of observations
-    #Values Plot
-    df[['X[t]']].plot(figsize = (20,10), linewidth = 5, fontsize = 20)
-    plt.xlabel('Date', fontsize = 20)
-
-
-
-    #Differences Plot
-    df[['Y[t]']].plot(figsize = (20,10), linewidth = 5, fontsize = 20)
-    plt.xlabel('Date', fontsize = 20)
-
-    #Trends and Seasonality in time-series with rolling means
-    #Smoothed out seasonality and noise by trying hourly seasonality-24 hrs
-    #Removed seasonality
-    #There is a constant trend in the beginnign and then a spike at the end
-    print("Smoothing")
-    values = df[['X[t]']]
-    values.rolling(14).mean().plot(figsize = (20,10), linewidth = 5, fontsize = 20)
-    plt.xlabel('Date', fontsize = 20)
-
-    #Differences
-    #Plotted differences to clearly see the points of trends on the graph
-    #-------------------------------------------------------------------
-    print("Differencing")
-    diff = df[['Y[t]']]
-    diff.rolling(14).mean().plot(figsize = (20,10), linewidth = 5, fontsize = 20)
-    plt.xlabel('Date', fontsize = 20)
-
-    #Removed noise and seasonality from differences
-    #After plotting the differences we can see the points where the trend
-    #drops or spikes and when (orange line)
-    df_combined = pd.concat([values.rolling(24).mean(), diff.rolling(24).mean()], axis = 1)
-    df_combined.plot(figsize = (20,10), linewidth = 5, fontsize = 20)
-    plt.xlabel('Date', fontsize = 20)
-
-    #Values X[t] differenced with diff() to note the spikes and drops of
-    #the trend
-    values.diff().plot(figsize = (20,10), linewidth = 5, fontsize = 20)
-    plt.xlabel('Date', fontsize = 20)
-
-    #Plot the values X[t] and difference Y[t] on the same plot
-    #Without smoothing
-    #and their correlation coefficients
-    #They are positively correlated
-    df.plot(figsize=(20,10), linewidth=5, fontsize=20)
-    plt.xlabel('Date', fontsize=20)
-    df.corr()
-
-    #Plot first order differencing of these time series and 
-    # compute correlation of the seasonal components
-    # Once removing the trends the correlation increases dynamically
-    # They are highly correlated
-    df.diff().plot(figsize=(20,10), linewidth=5, fontsize=20)
-    plt.xlabel('Date', fontsize=20)
-    df.diff().corr()
-
-    #This shows that the original time series do not repeat itself.
-    # We see the trend starting with a spike and falling drastically
-    #Drops again after 2500 observations and then comes up again
-    fig, ax1 = plt.subplots(1)
-    ax1 = pd.plotting.autocorrelation_plot(values)
-    ax1.set_ylim([-0.5, 1.5])
-    ax1.set_xlim([0, 20])
-
-    fig, ax2 = plt.subplots(1)
-    ax2 = pd.plotting.autocorrelation_plot(diff)
-    ax2.set_xlim([0, 20])
-
-    fig, ax3 = plt.subplots(1)
-    ax3 = sns.distplot(diff, bins=100, kde=True, color='blue', hist_kws={"linewidth": 15,'alpha':1})
-    ax3.set(xlabel='Normal Distribution', ylabel='Frequency')
-
-    fig, ax4 = plt.subplots(1)
-    ax4 = sns.distplot(values, bins=100, kde=True, color='blue', hist_kws={"linewidth": 15,'alpha':1})
-    ax4.set(xlabel='Normal Distribution', ylabel='Frequency')
     
-    pdf = matplotlib.backends.backend_pdf.PdfPages("time_series_analysis_{}.pdf".format(user_input))
-    for fig in range(1, fig.number): ## will open an empty extra figure :(
-        pdf.savefig(fig)
-    pdf.close()
+    plt.figure()
+    print("Smoothing")
+    values = df[['value']]
+    values.rolling(14).mean().plot(figsize = (20,10), linewidth = 5, fontsize = 20)
+    plt.xlabel('Date', fontsize = 30)
+    plt.ylabel('Load Value', fontsize = 30)
+    plt.title('Smoothed out Time Series', fontsize = 40)
+    plt.legend(loc=2, prop={'size': 20})
+    plt.savefig('timeseries_analysis/smoothed_data' + time.strftime("%Y-%m-%d %H%M%S") + '.png')
+
+    
+    plt.figure()
+    values.diff().plot(figsize = (20,10), linewidth = 5, fontsize = 20)
+    plt.xlabel('Date', fontsize = 30)
+    plt.ylabel('Load Value', fontsize = 30)
+    plt.title('Differenced Time Series', fontsize = 40)
+    plt.legend(loc=2, prop={'size': 20})
+    plt.savefig('timeseries_analysis/differencing_data' + time.strftime("%Y-%m-%d %H%M%S") + '.png')
+
+    
+    plt.figure()
+    values = df['value']
+    pd.plotting.autocorrelation_plot(values)
+    plt.savefig('timeseries_analysis/autocorrelation' + time.strftime("%Y-%m-%d %H%M%S") + '.png')
+    
+    df.corr()
     return
 
 
-# In[22]:
+# In[54]:
 
 
 if __name__ == "__main__":
