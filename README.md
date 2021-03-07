@@ -2,8 +2,8 @@
 
 ## Executables
 
-simulation_tool.py
-time-series_analysis.py
+- simulation_tool.py
+- time-series_analysis.py
 
 These executables were built using ipython module.
 To run open a command prompt window in the directory and run:
