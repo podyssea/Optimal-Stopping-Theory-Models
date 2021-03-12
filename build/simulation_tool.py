@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[1]:
+# In[12]:
 
 
 import numpy as np
@@ -242,7 +242,11 @@ def house_selling_model(counter, r):
 
 # # RUNS AND VALUES SIMULATIONS FOR MODELS
 
+<<<<<<< HEAD
 # In[15]:
+=======
+# In[7]:
+>>>>>>> 43faf7057c2cedf822475a296403ac8e4ee2c79c
 
 
 #Simulate the random prob model by defining the rpb to be executed
@@ -272,7 +276,11 @@ def randomP_simulation_run(chunk_func, N):
     plt.xlim([0-bar_width/2,index.size])
     plt.plot()
     plt.legend(prop={'size': 25})
+<<<<<<< HEAD
     plt.savefig('randomp_figures/random(p)_{}_'.format(N) + time.strftime("%Y-%m-%d %H%M%S") + '.png')
+=======
+    plt.savefig('randomp_figures/random(p)_{}' + time.strftime("%Y-%m-%d %H%M%S") + '.png'.format(N))
+>>>>>>> 43faf7057c2cedf822475a296403ac8e4ee2c79c
 
     
     
@@ -291,7 +299,11 @@ def randomP_simulation_run(chunk_func, N):
     plt.plot()  
     plt.legend(prop={'size': 25})
 
+<<<<<<< HEAD
     plt.savefig('randomp_figures/random(p)_times_{}_'.format(N) + time.strftime("%Y-%m-%d %H%M%S") + '.png')
+=======
+    plt.savefig('randomp_figures/random(p)_times_{}' + time.strftime("%Y-%m-%d %H%M%S") + '.png'.format(N))
+>>>>>>> 43faf7057c2cedf822475a296403ac8e4ee2c79c
     
     #Display the dataframe
     runs_data = {'Run':  list(range(1,len(chunk_func[0])+1)),'Optimal': chunk_func[0],'Load when Offloading': chunk_func[1],
@@ -302,7 +314,11 @@ def randomP_simulation_run(chunk_func, N):
 
     display(runs_frame)
     
+<<<<<<< HEAD
     runs_frame.to_csv('randomp_figures/dataframes/randomp_data_{}_'.format(N) + time.strftime("%Y-%m-%d %H%M%S") + '.csv')
+=======
+    runs_frame.to_csv('randomp_figures/dataframes/randomp_data_{}' + time.strftime("%Y-%m-%d %H%M%S") + '.csv'.format(N))
+>>>>>>> 43faf7057c2cedf822475a296403ac8e4ee2c79c
 
 
 #Simulate the random prob model by defining the rpb to be executed
@@ -334,7 +350,11 @@ def secretary_simulation_run(chunks):
     plt.xlim([0-bar_width/2,index.size])
     plt.plot()
     plt.legend(prop={'size': 25})
+<<<<<<< HEAD
     plt.savefig('secretary_figures/secretary_{}_'.format(chunks) + time.strftime("%Y-%m-%d %H%M%S") + '.png')
+=======
+    plt.savefig('secretary_figures/secretary_{}' + time.strftime("%Y-%m-%d %H%M%S") + '.png'.format(chunks))
+>>>>>>> 43faf7057c2cedf822475a296403ac8e4ee2c79c
 
 
 
@@ -357,7 +377,11 @@ def secretary_simulation_run(chunks):
 
     
 #    ax2.plot()
+<<<<<<< HEAD
     plt.savefig('secretary_figures/secretary_times_{}_'.format(chunks) + time.strftime("%Y-%m-%d %H%M%S") + '.png')
+=======
+    plt.savefig('secretary_figures/secretary_times_{}' + time.strftime("%Y-%m-%d %H%M%S") + '.png'.format(chunks))
+>>>>>>> 43faf7057c2cedf822475a296403ac8e4ee2c79c
     
     
     #Display the dataframe
@@ -369,7 +393,11 @@ def secretary_simulation_run(chunks):
 
     display(runs_frame)
     
+<<<<<<< HEAD
     runs_frame.to_csv('secretary_figures/dataframes/secretary_data_{}_'.format(chunks) + time.strftime("%Y-%m-%d %H%M%S") + '.csv')
+=======
+    runs_frame.to_csv('secretary_figures/dataframes/secretary_data_{}' + time.strftime("%Y-%m-%d %H%M%S") + '.csv'.format(chunks))
+>>>>>>> 43faf7057c2cedf822475a296403ac8e4ee2c79c
 
 def house_selling_simulation_run(chunks, r):
     n_groups_house = len(house_selling_model(chunks, r)[0])
@@ -396,7 +424,11 @@ def house_selling_simulation_run(chunks, r):
     plt.yticks(fontsize= 30)
     plt.xlim([0-bar_width/2,index.size])
     plt.legend(prop={'size': 25})
+<<<<<<< HEAD
     plt.savefig('house_selling_figures/hs_{}_'.format(chunks) + time.strftime("%Y-%m-%d %H%M%S") + '.png')
+=======
+    plt.savefig('house_selling_figures/hs_{}' + time.strftime("%Y-%m-%d %H%M%S") + '.png'.format(chunks))
+>>>>>>> 43faf7057c2cedf822475a296403ac8e4ee2c79c
     
     plt.figure(figsize=(30,25))
     # Times Plot
@@ -414,7 +446,11 @@ def house_selling_simulation_run(chunks, r):
     plt.plot()
 
     
+<<<<<<< HEAD
     plt.savefig('house_selling_figures/hs_times_{}_'.format(chunks) + time.strftime("%Y-%m-%d %H%M%S") + '.png')
+=======
+    plt.savefig('house_selling_figures/hs_times_{}' + time.strftime("%Y-%m-%d %H%M%S") + '.png'.format(chunks))
+>>>>>>> 43faf7057c2cedf822475a296403ac8e4ee2c79c
     
     #Display the dataframe
     runs_data = {'Run':  list(range(1,len(house_selling_model(chunks, r)[0])+1)),'Optimal': house_selling_model(chunks, r)[0],'Load when Offloading': house_selling_model(chunks, r)[1],
@@ -425,7 +461,11 @@ def house_selling_simulation_run(chunks, r):
 
     display(runs_frame)
 
+<<<<<<< HEAD
     runs_frame.to_csv('house_selling_figures/dataframes/hs_data_{}_'.format(chunks) + time.strftime("%Y-%m-%d %H%M%S") + '.csv')
+=======
+    runs_frame.to_csv('house_selling_figures/dataframes/hs_data_{}' + time.strftime("%Y-%m-%d %H%M%S") + '.csv'.format(chunks))
+>>>>>>> 43faf7057c2cedf822475a296403ac8e4ee2c79c
     
 
     
@@ -475,7 +515,11 @@ def avg_loads_by_stop(rpb_model, secretary_model, house_selling_model):
     
     plt.legend(prop={'size': 25})
     
+<<<<<<< HEAD
     plt.savefig('averages/Averages for chosen N_' + time.strftime("%Y-%m-%d %H%M%S") + '.png')
+=======
+    plt.savefig('averages/Averages for chosen N' + time.strftime("%Y-%m-%d %H%M%S") + '.png')
+>>>>>>> 43faf7057c2cedf822475a296403ac8e4ee2c79c
     
     #Display the dataframe
     runs_data = {'Model':  ['Random(P = 0.05)','Random(P = 0.1)','Random(P = 0.2)','Random(P = 0.3)','Random(P = 0.5)', 'Secretary', 'House Selling'],
@@ -502,10 +546,17 @@ def avg_loads_by_stop(rpb_model, secretary_model, house_selling_model):
                  ha='center', va='center', rotation=0, xytext=(0, 20), textcoords='offset points')
     
     
+<<<<<<< HEAD
     plt.savefig('averages/Best_Model_' + time.strftime("%Y-%m-%d %H%M%S") + '.png')
     
     display(runs_frame)
     runs_frame.to_csv('averages/dataframes/averages_data_' + time.strftime("%Y-%m-%d %H%M%S") + '.csv')
+=======
+    plt.savefig('averages/Best_Model' + time.strftime("%Y-%m-%d %H%M%S") + '.png')
+    
+    display(runs_frame)
+    runs_frame.to_csv('averages/dataframes/averages_data' + time.strftime("%Y-%m-%d %H%M%S") + '.png')
+>>>>>>> 43faf7057c2cedf822475a296403ac8e4ee2c79c
     
 
     
@@ -585,7 +636,11 @@ def avg_loads_by_stop(rpb_model, secretary_model, house_selling_model):
 # 200 0.015
 
 
+<<<<<<< HEAD
 # In[13]:
+=======
+# In[10]:
+>>>>>>> 43faf7057c2cedf822475a296403ac8e4ee2c79c
 
 
 def main():
@@ -680,7 +735,11 @@ def main():
             return
 
 
+<<<<<<< HEAD
 # In[14]:
+=======
+# In[ ]:
+>>>>>>> 43faf7057c2cedf822475a296403ac8e4ee2c79c
 
 
 if __name__ == "__main__":
