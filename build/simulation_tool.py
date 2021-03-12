@@ -1,3 +1,5 @@
+#author: Odysseas Polycarpou
+#guid: 2210049p
 #!/usr/bin/env python
 # coding: utf-8
 
@@ -12,8 +14,8 @@ from scipy.stats import norm
 from scipy.stats import stats
 import math
 import random
-from matplotlib import pyplot as plt 
-import numpy as np  
+from matplotlib import pyplot as plt
+import numpy as np
 import matplotlib.backends.backend_pdf
 import random
 import math
@@ -47,7 +49,7 @@ sns.set()
 def file(fileinput):
     if not ".csv" in fileinput:
         fileinput = "data/" + fileinput + ".csv"
-    
+
     global df
     df = pd.read_csv(fileinput,skiprows=0)
     df['difference'] = df.iloc[:,1].diff()
@@ -65,7 +67,7 @@ def file(fileinput):
 
 def random_prob_model(counter, probability):
     #From the dataframe these are the load values and the dates columns stored in arrays to be processed
-    
+
     distribution = df.reset_index(drop=False).iloc[:,1].values
     distribution = distribution[:len(distribution)-31]
     dates = df.reset_index(drop=False).iloc[:,0].values
@@ -79,8 +81,8 @@ def random_prob_model(counter, probability):
     time_list = []
     minimums = []
     minimums_times = []
-    
-    
+
+
     load_data = []
     for i in range(0, len(distribution), counter):
         chunked_data = distribution[i:i + counter]
@@ -88,7 +90,7 @@ def random_prob_model(counter, probability):
         minimums.append(min_value)
         min_index = np.where(chunked_data == min_value)[0][0]
         minimums_times.append(min_index)
-        load_data.append(chunked_data)        
+        load_data.append(chunked_data)
 
     for chunk in load_data:
         best = 0
@@ -112,10 +114,10 @@ def random_prob_model(counter, probability):
                 #print("The difference between the Optimal and the Achieved load values is " + str(next_observations[-1] - minimumL))
                 break
             index += 1
-    
+
     load_differences = np.asarray(load_list) - np.asarray(minimums)
     times_differences = np.array(time_list) - np.array(minimums_times)
-    
+
     return minimums, load_list, load_differences, minimums_times, time_list, times_differences
 
 
@@ -137,7 +139,7 @@ def secretary_model(counter):
     load_list = []
     minimums = []
     minimums_times = []
-    
+
     load_data = []
     for i in range(0, len(distribution), counter):
         chunked_data = distribution[i:i + counter]
@@ -146,7 +148,7 @@ def secretary_model(counter):
         min_index = np.where(chunked_data == min_value)[0][0]
         minimums_times.append(min_index)
         load_data.append(chunked_data)
-    
+
     for chunk in load_data:
         samplesize = round(len(chunk) * math.exp(-1))
         sample = chunk[ : samplesize]
@@ -178,7 +180,7 @@ def secretary_model(counter):
     load_differences = np.asarray(load_list) - np.asarray(minimums)
     times_differences = np.array(time_list) - np.array(minimums_times)
     time_delays = [x - 37 for x in time_list]
-    
+
     return minimums, load_list, load_differences, minimums_times, time_list, times_differences
 
 
@@ -188,7 +190,7 @@ def secretary_model(counter):
 
 
 #Without Dataset
-# A = [[2,6,7,10,4,7,4,8,9,3], [8,5,3,9,1,7,9,10,4,3]] 
+# A = [[2,6,7,10,4,7,4,8,9,3], [8,5,3,9,1,7,9,10,4,3]]
 def house_selling_model(counter, r):
     distribution = df.reset_index(drop=False).iloc[:,1].values
     distribution = distribution[:len(distribution)-31]
@@ -218,7 +220,7 @@ def house_selling_model(counter, r):
         for k in range(1,len(each)):
             scaled_availability[k] = (max(each) - each[k])/(max(each) - min(each))
         scaled_list.append(scaled_availability)
-        
+
 
     d = np.full(shape=counter, fill_value=0, dtype=np.float)
     for i in range(N-2,-1,-1):
@@ -233,10 +235,10 @@ def house_selling_model(counter, r):
                 time_list.append(i)
                 break
         c += 1
-        
+
     load_differences = np.asarray(load_list) - np.asarray(minimums)
     times_differences = np.array(time_list) - np.array(minimums_times)
-    
+
     return minimums, load_list, load_differences, minimums_times, time_list, times_differences
 
 
@@ -274,12 +276,12 @@ def randomP_simulation_run(chunk_func, N):
     plt.legend(prop={'size': 25})
     plt.savefig('randomp_figures/random(p)_{}_'.format(N) + time.strftime("%Y-%m-%d %H%M%S") + '.png')
 
-    
-    
+
+
     plt.figure(figsize=(30,25))
     #Times Plot
     rects2 = plt.bar(index, np.absolute(chunk_func[5]), bar_width,alpha=opacity,color='darkblue',label='Time instance difference from optimal')
-    
+
     #Label
     plt.xlabel('Stops', size = 50)
     plt.ylabel('Time Instances', size = 50)
@@ -288,11 +290,11 @@ def randomP_simulation_run(chunk_func, N):
     plt.xticks(fontsize= 30)
     plt.yticks(fontsize= 30)
     plt.xlim([0-bar_width/2,index.size])
-    plt.plot()  
+    plt.plot()
     plt.legend(prop={'size': 25})
 
     plt.savefig('randomp_figures/random(p)_times_{}_'.format(N) + time.strftime("%Y-%m-%d %H%M%S") + '.png')
-    
+
     #Display the dataframe
     runs_data = {'Run':  list(range(1,len(chunk_func[0])+1)),'Optimal': chunk_func[0],'Load when Offloading': chunk_func[1],
                  'Load Difference': chunk_func[2],}
@@ -301,7 +303,7 @@ def randomP_simulation_run(chunk_func, N):
     runs_frame.index += 1
 
     display(runs_frame)
-    
+
     runs_frame.to_csv('randomp_figures/dataframes/randomp_data_{}_'.format(N) + time.strftime("%Y-%m-%d %H%M%S") + '.csv')
 
 
@@ -316,14 +318,14 @@ def secretary_simulation_run(chunks):
     index = np.arange(n_groups_secretary)
     bar_width = 0.4
     opacity = 0.8
-    
+
     # Loads Plot
     #Plot the achieved values of each observed samle
     rects2 = plt.bar(index, secretary_model(chunks)[1], bar_width,alpha=opacity,color='black',label='Achieved')
-    
+
     #Plot the minimum values of each observed sample
     rects1 = plt.bar(index + bar_width, secretary_model(chunks)[0], bar_width, alpha=opacity,color='darkred',label='Optimal')
-    
+
     #Label
     plt.xlabel('Stops', size = 50)
     plt.ylabel('Load Values', size = 50)
@@ -343,7 +345,7 @@ def secretary_simulation_run(chunks):
 
     #Plot the minimum values of each observed sample
     rects1 = plt.bar(index + bar_width, secretary_model(chunks)[5], bar_width, alpha=opacity,color='darkblue',label='Time instance difference from optimal')
-    
+
     #Label
     plt.xlabel('Stops', size = 50)
     plt.ylabel('Time Instances', size = 50)
@@ -355,11 +357,11 @@ def secretary_simulation_run(chunks):
     plt.plot()
     plt.legend(prop={'size': 25})
 
-    
+
 #    ax2.plot()
     plt.savefig('secretary_figures/secretary_times_{}_'.format(chunks) + time.strftime("%Y-%m-%d %H%M%S") + '.png')
-    
-    
+
+
     #Display the dataframe
     runs_data = {'Run':  list(range(1,len(secretary_model(chunks)[0])+1)),'Optimal': secretary_model(chunks)[0],'Load when Offloading': secretary_model(chunks)[1],
                  'Load Difference': secretary_model(chunks)[2],}
@@ -368,7 +370,7 @@ def secretary_simulation_run(chunks):
     runs_frame.index += 1
 
     display(runs_frame)
-    
+
     runs_frame.to_csv('secretary_figures/dataframes/secretary_data_{}_'.format(chunks) + time.strftime("%Y-%m-%d %H%M%S") + '.csv')
 
 def house_selling_simulation_run(chunks, r):
@@ -379,13 +381,13 @@ def house_selling_simulation_run(chunks, r):
     index = np.arange(n_groups_house)
     bar_width = 0.4
     opacity = 0.8
-    
+
     # Loads Plot
     #Plot the achieved values of each observed samle
     rects2 = plt.bar(index, house_selling_model(chunks, r)[1], bar_width,alpha=opacity,color='black',label='Achieved')
     #Plot the minimum values of each observed sample
     rects1 = plt.bar(index + bar_width, house_selling_model(chunks, r)[0], bar_width, alpha=opacity,color='darkred',label='Optimal')
-    
+
     #Label
     #Label
     plt.xlabel('Stops', size = 50)
@@ -397,12 +399,12 @@ def house_selling_simulation_run(chunks, r):
     plt.xlim([0-bar_width/2,index.size])
     plt.legend(prop={'size': 25})
     plt.savefig('house_selling_figures/hs_{}_'.format(chunks) + time.strftime("%Y-%m-%d %H%M%S") + '.png')
-    
+
     plt.figure(figsize=(30,25))
     # Times Plot
     #Plot the achieved values of each observed sample
     rects2 = plt.bar(index, house_selling_model(chunks, r)[5], bar_width,alpha=opacity,color='darkblue',label='Time instance difference from optimal')
-    
+
     plt.xlabel('Stops', size = 50)
     plt.ylabel('Time Instances', size = 50)
     plt.title('Times in each Run with N = {} for House Selling Model'.format(chunks), size = 60)
@@ -413,9 +415,9 @@ def house_selling_simulation_run(chunks, r):
     plt.legend(prop={'size': 25})
     plt.plot()
 
-    
+
     plt.savefig('house_selling_figures/hs_times_{}_'.format(chunks) + time.strftime("%Y-%m-%d %H%M%S") + '.png')
-    
+
     #Display the dataframe
     runs_data = {'Run':  list(range(1,len(house_selling_model(chunks, r)[0])+1)),'Optimal': house_selling_model(chunks, r)[0],'Load when Offloading': house_selling_model(chunks, r)[1],
                  'Load Difference': house_selling_model(chunks, r)[2],}
@@ -426,9 +428,9 @@ def house_selling_simulation_run(chunks, r):
     display(runs_frame)
 
     runs_frame.to_csv('house_selling_figures/dataframes/hs_data_{}_'.format(chunks) + time.strftime("%Y-%m-%d %H%M%S") + '.csv')
-    
 
-    
+
+
 
 
 # # RANDOM AND SECRETARY MODELS Vs OPTIMAL
@@ -440,19 +442,19 @@ def house_selling_simulation_run(chunks, r):
 
 #Set the rpb_model(eg. rpb_200) and the secretary model(eg. secretary model(200))
 def avg_loads_by_stop(rpb_model, secretary_model, house_selling_model):
-    fig, ax = plt.subplots(1, 1,figsize=(30,25)) 
+    fig, ax = plt.subplots(1, 1,figsize=(30,25))
     bar_width = 0.4
     opacity = 0.8
-    
+
     optimal_means = [np.mean(rpb_model[0][0]),np.mean(rpb_model[1][0]),np.mean(rpb_model[2][0]),np.mean(rpb_model[3][0]),
                               np.mean(rpb_model[4][0]), np.mean(secretary_model[0]), np.mean(house_selling_model[0])]
-    
+
     achieved_means = [np.mean(rpb_model[0][1]),np.mean(rpb_model[1][1]),np.mean(rpb_model[2][1]),np.mean(rpb_model[3][1]),
                              np.mean(rpb_model[4][1]),np.mean(secretary_model[1]), np.mean(house_selling_model[1])]
-    
+
     all_means = np.array([np.mean(rpb_model[0][0]), np.mean(rpb_model[0][1]),np.mean(rpb_model[1][1]),np.mean(rpb_model[2][1]),np.mean(rpb_model[3][1]),
                              np.mean(rpb_model[4][1]),np.mean(secretary_model[1]), np.mean(house_selling_model[1])])
-    
+
     comparison = all_means - all_means[0][None]
     comp = list(comparison)
     comp.pop(0)
@@ -472,11 +474,11 @@ def avg_loads_by_stop(rpb_model, secretary_model, house_selling_model):
 #     for p in ax.patches:
 #             ax.annotate("%.2f" % p.get_height(), (p.get_x() + p.get_width() / 2., p.get_height()),
 #                  ha='center', va='center', rotation=0, xytext=(0, 20), textcoords='offset points')
-    
+
     plt.legend(prop={'size': 25})
-    
+
     plt.savefig('averages/Averages for chosen N_' + time.strftime("%Y-%m-%d %H%M%S") + '.png')
-    
+
     #Display the dataframe
     runs_data = {'Model':  ['Random(P = 0.05)','Random(P = 0.1)','Random(P = 0.2)','Random(P = 0.3)','Random(P = 0.5)', 'Secretary', 'House Selling'],
                  'Optimal Means': optimal_means,
@@ -487,7 +489,7 @@ def avg_loads_by_stop(rpb_model, secretary_model, house_selling_model):
                                                     'Offloading Means',
                                                     'Mean Load Difference'])
     runs_frame.index += 1
-    
+
     fig = plt.figure(figsize=(20,20))
     ax1 = plt.subplot(111)
     ret = ax1.bar(runs_frame['Model'], runs_frame['Mean Load Difference'], color = '#99ccff')
@@ -500,15 +502,15 @@ def avg_loads_by_stop(rpb_model, secretary_model, house_selling_model):
     for p in ax1.patches:
             ax1.annotate("%.2f" % p.get_height(), (p.get_x() + p.get_width() / 2., p.get_height()),
                  ha='center', va='center', rotation=0, xytext=(0, 20), textcoords='offset points')
-    
-    
+
+
     plt.savefig('averages/Best_Model_' + time.strftime("%Y-%m-%d %H%M%S") + '.png')
-    
+
     display(runs_frame)
     runs_frame.to_csv('averages/dataframes/averages_data_' + time.strftime("%Y-%m-%d %H%M%S") + '.csv')
-    
 
-    
+
+
 
 
 # In[9]:
@@ -638,7 +640,7 @@ def main():
             house_selling_simulation_run(chunk_selection,r_factor)
             print("\nYour result figures have been saved. You can view them in the /house_selling_figures/ folder!\nDataframe .csv is in the /dataframes/ folder\n\n")
         elif selection == '4':
-            
+
             chunk_selection = int(input("Please enter the number of chunks you want to analyze. You can choose from [20,50,80,100,150,200]: "))
 
             if chunk_selection == 20:
@@ -659,19 +661,19 @@ def main():
             if chunk_selection == 200:
                 r_factor = float(input("Please enter the R factor you want to use: "))
                 avg_loads_by_stop(rpb_200, secretary_model(chunk_selection), house_selling_model(chunk_selection, r_factor))
-                
+
             print("\nYour result figures have been saved. You can view them in the /averages/ folder!\nDataframe .csv is in the /dataframes/ folder\n\n")
         else:
             print("Error! Please enter a valid selection!\n")
 
 
         repeat = str(input("Do you want to repeat? If not type 'exit' or 'N' to go back. Else enter 'Y' to continue: "))
-        
-    
+
+
         while (repeat != 'Y' and repeat != 'N' and repeat != 'exit' ):
             print("Sorry! I didn't understand that! :( Please enter a valid selection!\n")
             repeat = str(input("Do you want to repeat? If not type 'exit' or 'N' to go back. Else enter 'Y' to continue: "))
-        
+
         if repeat == 'Y':
             loop = True
         elif repeat == 'N' or repeat == 'exit':
@@ -694,7 +696,3 @@ if __name__ == "__main__":
 
 
 # In[ ]:
-
-
-
-
