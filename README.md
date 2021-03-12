@@ -32,13 +32,81 @@ $ ipython simulation_tool.py
 ```bash
 $ ipython time-series_analysis.py
 ```
+Each time an executable runs it produces a console output which accepts user input. An example is shown below. Follow the instructions on the screen.
+
+```bash
+$ ipython simulation_tool.py
+Please enter the name of the .csv file you want to view: 4
+                       X[t]   Y[t]
+date
+2014-02-14 14:32:00  44.508 -7.338
+2014-02-14 14:37:00  41.244 -3.264
+2014-02-14 14:42:00  48.568  7.324
+2014-02-14 14:47:00  46.714 -1.854
+2014-02-14 14:52:00  44.986 -1.728
+...                     ...    ...
+2014-02-28 14:02:00  38.474 -1.404
+2014-02-28 14:07:00  40.352  1.878
+2014-02-28 14:12:00  37.912 -2.440
+2014-02-28 14:17:00  38.458  0.546
+2014-02-28 14:22:00  37.718 -0.740
+
+[4031 rows x 2 columns]
+You can choose from:
+ 1 = Random(P) Model
+ 2 = Secretary Model
+ 3 = House Selling Model
+ 4 = Average of Models
+Enter your selection: 1
+Please enter the number of chunks you want to analyze. You can choose from [20,5
+0,80,100,150,200]: 200
+Please enter the probability you want.
+
+
+You can choose from:
+ 0 = 0.05
+ 1 = 0.1
+ 2 = 0.2
+ 3 = 0.3
+ 4 = 0.5
+
+Enter your selection: 1
+    Run  Optimal  Load when Offloading  Load Difference
+1     1   39.870                43.544            3.674
+2     2   39.554                49.366            9.812
+3     3   38.522                52.044           13.522
+4     4   39.648                52.516           12.868
+5     5   39.554                51.690           12.136
+6     6   39.788                44.906            5.118
+7     7   39.340                40.560            1.220
+8     8   38.408                40.586            2.178
+9     9   38.270                48.466           10.196
+10   10   38.486                43.524            5.038
+11   11   38.428                41.650            3.222
+12   12   38.404                48.826           10.422
+13   13   37.276                48.462           11.186
+14   14   38.564                45.516            6.952
+15   15   34.766                42.348            7.582
+16   16   35.310                37.700            2.390
+17   17   35.278                38.756            3.478
+18   18   35.596                38.662            3.066
+19   19   35.376                37.594            2.218
+20   20   36.526                39.672            3.146
+
+Your result figures have been saved. You can view them in the /randomp_figures/
+folder!
+
+
+Do you want to repeat? If not type 'exit' or 'N' to go back. Else enter 'Y' to c
+ontinue:
+```
+
+
 In case there is a change in the code you can convert the .ipynbs to scripts by running the following command:
 
 ```bash
 $ ipython nbconvert --to script thescript.ipynb
 ```
-
-Follow the instructions on the screen when you run the executables.
 
 In case you don't have ipython you can install it with:
 
