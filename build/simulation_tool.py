@@ -686,7 +686,8 @@ def main():
 
 
 if __name__ == "__main__":
-     main()
+    print("Welcome to our OST Model Simulation Tool!")
+    main()
 
 
 # In[ ]:

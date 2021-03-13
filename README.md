@@ -34,7 +34,9 @@ $ ipython simulation_tool.py
 ```bash
 $ ipython time-series_analysis.py
 ```
-Each time an executable runs it produces a console output which accepts user input. An example is shown below. Follow the instructions on the screen.
+Each time an executable runs it produces a console output which accepts user input. An example is shown below where the user runs the ```simulation_tool.py```.
+
+Follow the instructions on the screen.
 
 ```bash
 $ ipython simulation_tool.py

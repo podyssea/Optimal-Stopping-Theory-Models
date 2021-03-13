@@ -113,6 +113,7 @@ def main():
 
 
 if __name__ == "__main__":
+    print("Welcome to our Time Series Analyis Tool!")
     main()
 
 
