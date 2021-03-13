@@ -4,22 +4,24 @@ This is my 5th Year Project for MSci Software Engineering.
 
 ## Project Description
 
-In this project we are carrying out a decision making process for task offloading in MEC server non-sequentially using Optimal Stopping Theory models. We are designing 3 algorithms to work with:
+In this project we are carrying out a decision making process for task offloading on MEC servers non-sequentially using Optimal Stopping Theory models. We are designed 3 algorithms to work with:
 
 - Random(P) Model
 - Secretary Model
 - House Selling Model
 
-and we optimize them to bring the decision making process as closer as possible to the Optimal Solution. The performance of our models is evaluated using graphical representation which is the main output of our executables. In addition we provide another python module to carry out Time-Series Analysis. Our software takes in ```.csv``` files. Sample data for marker is provided in the ```\data``` folder in the source repository.
+We optimize the abovementioned algorithms to bring the decision making process as close as possible to the Optimal Solution. The performance of our models is evaluated using graphical representation which is the main output of our executables. In addition we are providing ```.csv``` files with the numerical results. In addition, we provide another python module to carry out Time-Series Analysis. Both executables take in ```.csv``` files as inputs. Sample data for marker is provided in the ```\data``` folder in the ```\build\``` source folder.
 
 ## Executables
 
-We have two main executables. ```simulation_tool.py``` carries out the simulations for the desired model. ```time-series_analysis.py``` is simpler and carries out a times series analysis using the ```.csv``` inputted. They both operate through the command prompt.
+We have two executables.
 
 ```
 simulation_tool.py
 time-series_analysis.py
 ```
+
+```simulation_tool.py``` carries out the simulations for the desired model. ```time-series_analysis.py``` is simpler and carries out a times series analysis using the ```.csv``` inputted. They both operate through the command prompt.
 
 # Building/Running Instructions for Marker
 
