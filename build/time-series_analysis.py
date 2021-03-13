@@ -42,7 +42,7 @@ sns.set()
 # In[52]:
 
 
-#Load the dataset with the calculated differences Y[t], ommit the first value because difference is NaN and print the head()
+#Load the dataset with the calculated differences Y[t], commit the first value because difference is NaN and print the head()
 
 def file(fileinput):
     if not ".csv" in fileinput:
