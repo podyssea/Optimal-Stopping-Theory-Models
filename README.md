@@ -1,4 +1,4 @@
-# Time Series and Optimal-Stopping-Theory-Models Anlysis
+# Time Series Analysis and Data Quality Aware Task Offloading using Optimal Stopping Theory Models
 
 This is my 5th Year Project for MSci Software Engineering.
 
