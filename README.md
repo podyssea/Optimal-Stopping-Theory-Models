@@ -105,6 +105,7 @@ Do you want to repeat? If not type 'exit' or 'N' to go back. Else enter 'Y' to c
 ontinue:
 ```
 
+# Installing Dependencies
 
 In case there is a change in the code you can convert the .ipynbs to scripts by running the following command:
 
