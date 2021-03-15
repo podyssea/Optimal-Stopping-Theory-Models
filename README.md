@@ -10,7 +10,7 @@ In this project we are carrying out a decision making process for task offloadin
 - Secretary Model
 - House Selling Model
 
-We optimize the abovementioned algorithms to bring the decision making process as close as possible to the Optimal Solution. The performance of our models is evaluated using graphical representation which is the main output of our executables. In addition we are providing ```.csv``` files with the numerical results. In addition, we provide another python module to carry out Time-Series Analysis. Both executables take in ```.csv``` files as inputs. Sample data for marker is provided in the ```\data``` folder in the ```\build\``` source folder.
+We optimize the abovementioned algorithms to bring the decision making process as close as possible to the Optimal Solution. The performance of our models is evaluated using graphical representation which is the main output of our executables. In addition we are providing ```.csv``` files with the numerical results. In addition, we provide another python module to carry out Time-Series Analysis. Both executables take in ```.csv``` files as inputs. Sample data for marker is provided in the ```\build\data``` directory folder.
 
 ## Executables
 
@@ -97,12 +97,10 @@ Enter your selection: 1
 19   19   35.376                37.594            2.218
 20   20   36.526                39.672            3.146
 
-Your result figures have been saved. You can view them in the /randomp_figures/
-folder!
+Your result figures have been saved. You can view them in the /randomp_figures/ folder!
 
 
-Do you want to repeat? If not type 'exit' or 'N' to go back. Else enter 'Y' to c
-ontinue:
+Do you want to repeat? If not type 'exit' or 'N' to go back. Else enter 'Y' to continue:
 ```
 
 # Installing Dependencies
