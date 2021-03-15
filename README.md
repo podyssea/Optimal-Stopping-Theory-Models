@@ -111,7 +111,7 @@ In case there is a change in the code you can convert the .ipynbs to scripts by 
 $ ipython nbconvert --to script thescript.ipynb
 ```
 
-In case you don't have ipython you can install it with:
+In case you don't have ```ipython``` you can install it with:
 
 ```bash
 $ pip3 install ipython
