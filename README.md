@@ -25,6 +25,18 @@ time-series_analysis.py
 
 # Building/Running Instructions for Marker
 
+Before executing any source of code it is important for the marker to install all requirements so we avoid any error while running the software. In zipped submission folder containing all the source code of our customer, we are providing a file named ```requirements.txt```. This file, contains all the dependencies and libraries we have used for this project. We are providing this so the marker can inspect and install all modules required for executing our software. To install, open a command prompt and execute the following bash command. Make sure you are in the directory where ```requirements.txt``` is located.
+
+```bash
+$ pip install -r requirements.txt
+```
+
+Finally ```ipython``` can be install with:
+
+```bash
+$ pip3 install ipython
+```
+
 These executables were built using ipython module.
 To run open a command prompt window in the directory and run:
 
@@ -103,18 +115,12 @@ Your result figures have been saved. You can view them in the /randomp_figures/ 
 Do you want to repeat? If not type 'exit' or 'N' to go back. Else enter 'Y' to continue:
 ```
 
-# Installing Dependencies
+# Changing code for future use
 
-In case there is a change in the code you can convert the ```.ipynbs``` to scripts by running the following command:
+In case there is a change in the code it is more reasonable that it is made in one of the two ```.ipynbs``` in the ```\ipynbs``` directory. Then these modules can be converted to python scripts which are executable. You can convert the ```.ipynbs``` to scripts by running the following command:
 
 ```bash
 $ ipython nbconvert --to script thescript.ipynb
-```
-
-In case you don't have ```ipython``` you can install it with:
-
-```bash
-$ pip3 install ipython
 ```
 
 # Author
